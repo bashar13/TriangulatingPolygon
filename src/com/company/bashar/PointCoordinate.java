@@ -2,19 +2,29 @@ package com.company.bashar;
 
 public class PointCoordinate {
 
-    private int x;
-    private int y;
+    private double x;
+    private double y;
+    private char color;
 
-    PointCoordinate(int cX, int cY) {
+    PointCoordinate(double cX, double cY, char c) {
         x = cX;
         y = cY;
+        color = c;
     }
 
-    int getX() {
+    double getX() {
         return x;
     }
 
-    int getY() {
+    double getY() {
         return y;
     }
+
+    char getColor() {
+        return color;
+    }
+    void setColor(char c) {
+        color = c;
+    }
+
 }
