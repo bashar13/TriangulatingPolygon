@@ -1,9 +1,11 @@
 package com.company.bashar;
 
+import java.awt.*;
+
 class FindIntersections {
 
-    //checks if the point r lies on the line 'pq' or not
-    static boolean checkPointOnLineCalculationMethod(PointCoordinate p, PointCoordinate q, PointCoordinate r) {
+    //checks if the point q lies on the line 'pr' or not
+    static boolean isPointOnLine(PointCoordinate p, PointCoordinate q, PointCoordinate r) {
 
         double pr = Math.sqrt(Math.pow((p.getX() - r.getX()), 2)
                 + Math.pow((p.getY() - r.getY()), 2));
@@ -12,7 +14,7 @@ class FindIntersections {
         double qr = Math.sqrt(Math.pow((q.getX() - r.getX()), 2)
                 + Math.pow((q.getY() - r.getY()), 2));
 
-        return pr == pq + qr;
+        return Math.abs(pr - (pq + qr)) < .000000000000001;
     }
 
     /*
@@ -41,14 +43,14 @@ class FindIntersections {
     }
 
     // checks if point q lies on the line 'pr' or not
-    static boolean checkPointOnLine(PointCoordinate p, PointCoordinate q, PointCoordinate r)
-    {
-        if (q.getX() <= Math.max(p.getX(), r.getX()) && q.getX() >= Math.min(p.getX(), r.getX()) &&
-                q.getY() <= Math.max(p.getY(), r.getY()) && q.getY() >= Math.min(p.getY(), r.getY()))
-            return true;
-
-        return false;
-    }
+//    static boolean checkPointOnLine(PointCoordinate p, PointCoordinate q, PointCoordinate r)
+//    {
+//        if (q.getX() <= Math.max(p.getX(), r.getX()) && q.getX() >= Math.min(p.getX(), r.getX()) &&
+//                q.getY() <= Math.max(p.getY(), r.getY()) && q.getY() >= Math.min(p.getY(), r.getY()))
+//            return true;
+//
+//        return false;
+//    }
 
 //    static private int orientation(PointCoordinate p, PointCoordinate q, PointCoordinate r)
 //    {
@@ -75,8 +77,8 @@ class FindIntersections {
 //        return false; // Doesn't fall in any of the above cases
 //    }
 
-    static boolean checkIftheEdgeIntersectsWithAnotherEdge(PointCoordinate p1, PointCoordinate q1, PointCoordinate p2,
-                                                           PointCoordinate q2)
+    static boolean doTheLinesIntersect(PointCoordinate p1, PointCoordinate q1, PointCoordinate p2,
+                                       PointCoordinate q2)
     {
         // Line 'p1q1' represented by p1x + q1y = c1
         double a1 = q1.getY() - p1.getY();
@@ -109,7 +111,7 @@ class FindIntersections {
             } else {
                 //checks if the intersection point is on the both edges or on the extension of the edges
                 PointCoordinate pointCoordinate = new PointCoordinate(x, y, '\0');
-                return checkPointOnLine(p1, pointCoordinate, q1) && checkPointOnLine(p2, pointCoordinate, q2);
+                return isPointOnLine(p1, pointCoordinate, q1) && isPointOnLine(p2, pointCoordinate, q2);
             }
 
         }

@@ -1,10 +1,11 @@
 package com.company.bashar;
 
-public class PointCoordinate {
+class PointCoordinate {
 
     private double x;
     private double y;
     private char color;
+    private boolean isBoundaryNode = false;
 
     PointCoordinate(double cX, double cY, char c) {
         x = cX;
@@ -23,8 +24,16 @@ public class PointCoordinate {
     char getColor() {
         return color;
     }
+
+    boolean getBoundaryNode() {
+        return isBoundaryNode;
+    }
     void setColor(char c) {
         color = c;
+    }
+
+    void setBoundaryNode(boolean isBoundary) {
+        isBoundaryNode = isBoundary;
     }
 
 }
