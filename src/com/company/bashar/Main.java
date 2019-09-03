@@ -115,11 +115,14 @@ public class Main {
                 if (i != j) {
                     if (nodeList.get(j).getX() <= nodeList.get(i).getX()) {
                         if (adjacencyMatrix[i][j] != 1) {
-                            int p = checkAnyExistingPointOnTheLine(i, j);
-                            p = (p != -1)? p : j;
-                            if (!checkAnyExistingLineIntersect(adjacencyMatrix, i, p)) {
-                                adjacencyMatrix[i][p] = adjacencyMatrix[p][i] = 1;
+                            if (FindIntersections.isLineInsidePolygon(nodeList.get(i), nodeList.get(j), totalBoundaryNodes, nodeList)) {
+                                int p = checkAnyExistingPointOnTheLine(i, j);
+                                p = (p != -1)? p : j;
+                                if (!checkAnyExistingLineIntersect(adjacencyMatrix, i, p)) {
+                                    adjacencyMatrix[i][p] = adjacencyMatrix[p][i] = 1;
+                                }
                             }
+
                         }
 
                     }

@@ -1,6 +1,9 @@
 package com.company.bashar;
 
+import sun.jvm.hotspot.types.PointerType;
+
 import java.awt.*;
+import java.util.ArrayList;
 
 class FindIntersections {
 
@@ -27,6 +30,49 @@ class FindIntersections {
 
         return Math.abs((p.getX()*(q.getY()-r.getY()) + q.getX()*(r.getY()-p.getY())+
                 r.getX()*(p.getY()-q.getY()))/2.0);
+    }
+
+    /*
+    finds the middle point of a line connecting two points
+     */
+    static PointCoordinate midPointOfTwoPoints(PointCoordinate p, PointCoordinate q) {
+        double x = (p.getX() + q.getX())/2;
+        double y = (p.getY() + q.getY())/2;
+
+        return new PointCoordinate(x, y,'\0');
+    }
+
+    /*
+    determines whether the point p is inside the given polygon. If point p is inside the polygon then the line of which
+    p is a middle point is also inside the polygon.
+     */
+    static boolean isPointInsidePolygon(PointCoordinate p, int totalBoundaryPoints, ArrayList<PointCoordinate> nodeList) {
+        //draw a infinity line with the point
+        PointCoordinate q = new PointCoordinate(100000, p.getY(), '\0' );
+        int intersectionCount = 0;
+        for(int i = 0; i < totalBoundaryPoints; i++) {
+            if (i == totalBoundaryPoints - 1) {
+                if (doTheLinesIntersect(p, q, nodeList.get(i), nodeList.get(0))) {
+                    intersectionCount++;
+                }
+            } else {
+                if (doTheLinesIntersect(p, q, nodeList.get(i), nodeList.get(i+1))) {
+                    intersectionCount++;
+                }
+            }
+        }
+
+        return ((intersectionCount % 2) == 1);
+    }
+
+    /*
+    determines whether the line connecting two nodes of a polygon is inside the polygon or not
+     */
+    static boolean isLineInsidePolygon(PointCoordinate p, PointCoordinate q, int totalBoundaryPoints, ArrayList<PointCoordinate> nodeList) {
+        PointCoordinate midPoint = midPointOfTwoPoints(p, q);
+
+        return isPointInsidePolygon(midPoint, totalBoundaryPoints, nodeList);
+
     }
 
     /*
